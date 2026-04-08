@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>حاسبة أجرة الميكروباص</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+}
+
+input{
+padding:6px;
+text-align:center;
+font-size:16px;
+width:80px;
+}
+
+table{
+margin:auto;
+border-collapse:collapse;
+width:90%;
+max-width:500px;
+margin-top:20px;
+}
+
+td,th{
+border:1px solid #444;
+padding:10px;
+}
+
+.total{
+margin-top:20px;
+font-size:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>حاسبة الأجرة</h2>
+
+<p>
+الأجرة:
+<input id="fare" type="number" value="16" min="6" max="30" oninput="calc()">
+</p>
+
+<table>
+
+<tr>
+<th>المبلغ المستلم</th>
+<th>عدد الركاب</th>
+<th>الباقي</th>
+</tr>
+
+<tbody id="rows"></tbody>
+
+</table>
+
+<div class="total">
+
+<p id="totalPassengers">إجمالي الركاب: 0</p>
+
+<p id="totalMoney">إجمالي الفلوس معك: 0</p>
+
+<p id="totalFare">إجمالي الأجرة المطلوبة: 0</p>
+
+<p id="totalChange">إجمالي الباقي: 0</p>
+
+</div>
+
+<script>
+
+let rows = document.getElementById("rows");
+
+for(let i=0;i<6;i++) addRow();
+
+function addRow(){
+
+rows.innerHTML += `
+<tr>
+
+<td>
+<input type="number" oninput="calc()">
+</td>
+
+<td>
+<input type="number" oninput="calc()">
+</td>
+
+<td class="change">0</td>
+
+</tr>
+`;
+
+}
+
+function calc(){
+
+let fare = Number(document.getElementById("fare").value);
+
+if(fare < 6 || fare > 30) return;
+
+let trs = document.querySelectorAll("#rows tr");
+
+let totalPassengers = 0;
+let totalMoney = 0;
+let totalChange = 0;
+
+trs.forEach(tr=>{
+
+let inputs = tr.querySelectorAll("input");
+
+let money = Number(inputs[0].value);
+let people = Number(inputs[1].value);
+
+let changeCell = tr.querySelector(".change");
+
+if(money && people){
+
+let change = money - (fare * people);
+
+changeCell.innerText = change;
+
+totalPassengers += people;
+totalMoney += money;
+totalChange += change;
+
+}else{
+
+changeCell.innerText = 0;
+
+}
+
+});
+
+let totalFare = totalPassengers * fare;
+
+document.getElementById("totalPassengers").innerText =
+"إجمالي الركاب: " + totalPassengers;
+
+document.getElementById("totalMoney").innerText =
+"إجمالي الفلوس معك: " + totalMoney;
+
+document.getElementById("totalFare").innerText =
+"إجمالي الأجرة المطلوبة: " + totalFare;
+
+document.getElementById("totalChange").innerText =
+"إجمالي الباقي: " + totalChange;
+
+}
+
+</script>
+
+</body>
+</html>
