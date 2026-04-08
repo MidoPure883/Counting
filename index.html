@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>حاسبة أجرة الميكروباص</title>
+
+<style>
+body{
+font-family: Arial;
+background:#111;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.container{
+background:#222;
+padding:20px;
+border-radius:10px;
+max-width:400px;
+margin:auto;
+}
+
+input{
+width:80%;
+padding:10px;
+margin:10px;
+font-size:18px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+font-size:18px;
+background:#00c853;
+border:none;
+color:white;
+border-radius:6px;
+}
+
+.result{
+margin-top:20px;
+font-size:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>حاسبة الأجرة</h2>
+
+<p>الأجرة للشخص: 16 جنيه</p>
+
+<input id="money" type="number" placeholder="المبلغ المستلم">
+
+<input id="people" type="number" placeholder="عدد الأشخاص">
+
+<br>
+
+<button onclick="calc()">احسب</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+const fare = 16;
+
+function calc(){
+
+let money = Number(document.getElementById("money").value);
+let people = Number(document.getElementById("people").value);
+
+let totalFare = fare * people;
+let totalMoney = money * people;
+
+let changePerPerson = money - fare;
+let totalChange = totalMoney - totalFare;
+
+document.getElementById("result").innerHTML =
+`
+الباقي لكل شخص: ${changePerPerson} جنيه
+<br><br>
+إجمالي الباقي: ${totalChange} جنيه
+`;
+
+}
+
+</script>
+
+</body>
+</html>
